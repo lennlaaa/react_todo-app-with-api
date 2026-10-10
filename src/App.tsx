@@ -11,7 +11,7 @@ import {
   getTodos,
   addTodo,
   deleteTodo,
-  updateTodo,
+  updateTodo as updateTodoApi,
 } from './api/todos';
 
 import { Todo } from './types/Todo';
@@ -96,7 +96,7 @@ export const App: React.FC = () => {
   const handleUpdateTitle = (todoId: number, title: string) => {
     setUpdateTodo(prev => [...prev, todoId]);
 
-    updateTodo(todoId, { title })
+    updateTodoApi(todoId, { title })
       .then(updatedTodo => {
         setTodos(prev =>
           prev.map(todo => (todo.id === updatedTodo.id ? updatedTodo : todo)),
@@ -120,23 +120,10 @@ export const App: React.FC = () => {
     setEditingTodoId(todoId);
   };
 
-  const handleCancelEdit = () => {};
-
-  const handleToggleAll = () => {
-    const allCompleted = todos.every(todo => todo.completed);
-    const value = !allCompleted;
-
-    const todosToUpdate = todos.filter(todo => todo.completed !== value);
-
-    todosToUpdate.forEach(todo => {
-      handleToggle(todo.id, value);
-    });
-  };
-
   const handleToggle = (todoId: number, completed: boolean) => {
     setUpdateTodo(prev => [...prev, todoId]);
 
-    updateTodo(todoId, { completed })
+    updateTodoApi(todoId, { completed })
       .then(updatedTodo => {
         setTodos(prev =>
           prev.map(todo => (todo.id === updatedTodo.id ? updatedTodo : todo)),
@@ -152,6 +139,21 @@ export const App: React.FC = () => {
       .finally(() => {
         setUpdateTodo(prev => prev.filter(id => id !== todoId));
       });
+  };
+
+  const handleCancelEdit = () => {
+    setEditingTodoId(null);
+  };
+
+  const handleToggleAll = () => {
+    const allCompleted = todos.every(todo => todo.completed);
+    const value = !allCompleted;
+
+    const todosToUpdate = todos.filter(todo => todo.completed !== value);
+
+    todosToUpdate.forEach(todo => {
+      handleToggle(todo.id, value);
+    });
   };
 
   const handleDelete = (todoId: number) => {
@@ -218,7 +220,7 @@ export const App: React.FC = () => {
         setTodos(data);
       })
       .catch(() => {
-        setError('Unable to load todos');
+        setError(Error.LoadTodos);
 
         setTimeout(() => {
           setError('');
@@ -258,6 +260,7 @@ export const App: React.FC = () => {
           handleSubmit={handleSubmit}
           handleToggleAll={handleToggleAll}
         />
+
         {todos.length > 0 && (
           <section className="todoapp__main" data-cy="TodoList">
             <TodoList

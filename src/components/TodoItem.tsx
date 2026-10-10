@@ -1,11 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Todo } from '../types/Todo';
-
-import classNames from 'classnames';
 
 import { useState } from 'react';
-
-import React from 'react';
+import { Todo } from '../types/Todo';
+import classNames from 'classnames';
 
 type Props = {
   todo: Todo;
@@ -39,11 +36,13 @@ export const TodoItem = ({
 
     if (!newTitle) {
       onDelete(todo.id);
+
       return;
     }
 
     if (newTitle === todo.title) {
       handleCancelEdit();
+
       return;
     }
 
@@ -66,13 +65,11 @@ export const TodoItem = ({
     <div data-cy="Todo" className={todo.completed ? 'todo completed' : 'todo'}>
       <label className="todo__status-label">
         <input
-          data-cy="TodoTitleField"
-          className="todo__title-field"
-          value={title}
-          onChange={event => setTitle(event.target.value)}
-          onBlur={handleSave}
-          onKeyDown={handleKeyDown}
-          autoFocus
+          data-cy="TodoStatus"
+          type="checkbox"
+          className="todo__status"
+          checked={todo.completed}
+          onChange={() => onToggle(todo.id, !todo.completed)}
         />
       </label>
 
@@ -83,6 +80,8 @@ export const TodoItem = ({
             className="todo__title-field"
             value={title}
             onChange={event => setTitle(event.target.value)}
+            onBlur={handleSave}
+            onKeyDown={handleKeyDown}
             autoFocus
           />
         </form>

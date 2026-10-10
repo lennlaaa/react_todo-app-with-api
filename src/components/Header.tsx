@@ -20,14 +20,16 @@ export const Header = ({
   handleToggleAll,
 }: Props) => (
   <header className="todoapp__header">
-    <button
-      type="button"
-      className={`todoapp__toggle-all ${
-        todos.length > 0 && todos.every(todo => todo.completed) ? 'active' : ''
-      }`}
-      data-cy="ToggleAllButton"
-      onClick={handleToggleAll}
-    />
+    {todos.length > 0 && (
+      <button
+        type="button"
+        className={`todoapp__toggle-all ${
+          todos.every(todo => todo.completed) ? 'active' : ''
+        }`}
+        data-cy="ToggleAllButton"
+        onClick={handleToggleAll}
+      />
+    )}
 
     <form onSubmit={handleSubmit}>
       <input

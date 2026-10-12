@@ -46,7 +46,7 @@ export const Footer = ({
       {filters.map(filterItem => (
         <a
           key={filterItem.status}
-          href="#/"
+          href="/"
           className={classNames('filter__link', {
             selected: filter === filterItem.status,
           })}

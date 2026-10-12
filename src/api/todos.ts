@@ -6,7 +6,7 @@ export const getTodos = (userId: string): Promise<Todo[]> => {
 };
 
 export const addTodo = (todo: Omit<Todo, 'id'>): Promise<Todo> => {
-  return client.post<Todo>('/todos', todo);
+  return client.post<Todo, Omit<Todo, 'id'>>('/todos', todo);
 };
 
 export const deleteTodo = (todoId: number): Promise<unknown> => {
@@ -17,5 +17,5 @@ export const updateTodo = (
   todoId: number,
   data: Partial<Todo>,
 ): Promise<Todo> => {
-  return client.patch<Todo>(`/todos/${todoId}`, data);
+  return client.patch<Todo, Partial<Todo>>(`/todos/${todoId}`, data);
 };

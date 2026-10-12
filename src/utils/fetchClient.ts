@@ -11,10 +11,10 @@ function wait(delay: number) {
 // To have autocompletion and avoid mistypes
 type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
-function request<T>(
+function request<T, D = undefined>(
   url: string,
   method: RequestMethod = 'GET',
-  data: unknown = null, // we can send any data to the server
+  data?: D, // we can send any data to the server
 ): Promise<T> {
   const options: RequestInit = { method };
 
@@ -40,7 +40,7 @@ function request<T>(
 
 export const client = {
   get: <T>(url: string) => request<T>(url),
-  post: <T>(url: string, data: unknown) => request<T>(url, 'POST', data),
-  patch: <T>(url: string, data: unknown) => request<T>(url, 'PATCH', data),
+  post: <T, D>(url: string, data: D) => request<T, D>(url, 'POST', data),
+  patch: <T, D>(url: string, data: D) => request<T, D>(url, 'PATCH', data),
   delete: (url: string) => request(url, 'DELETE'),
 };

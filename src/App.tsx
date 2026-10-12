@@ -11,17 +11,11 @@ import {
   deleteTodo,
   updateTodo as updateTodoApi,
 } from './api/todos';
-
 import { Todo } from './types/Todo';
-
 import { ErrorNotification } from './components/ErrorNotification';
-
 import { Header } from './components/Header';
-
 import { Filter } from './types/Filter';
-
 import { Footer } from './components/Footer';
-
 import { TodoList } from './components/TodoList';
 
 enum Error {

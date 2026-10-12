@@ -3,11 +3,9 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 
 import React, { useState, useEffect, useRef } from 'react';
-
 import { UserWarning } from './UserWarning';
-
+import { USER_ID } from './constants';
 import {
-  USER_ID,
   getTodos,
   addTodo,
   deleteTodo,
@@ -215,7 +213,7 @@ export const App: React.FC = () => {
   }, [isAdding]);
 
   useEffect(() => {
-    getTodos()
+    getTodos(String(USER_ID))
       .then(data => {
         setTodos(data);
       })

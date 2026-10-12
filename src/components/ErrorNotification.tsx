@@ -17,7 +17,6 @@ export const ErrorNotification = ({ error, onClose }: Props) => {
         className="delete"
         onClick={onClose}
       />
-
       {error}
     </div>
   );
